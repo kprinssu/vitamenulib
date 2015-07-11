@@ -1,8 +1,9 @@
 #include "menu_manager.h"
 
 MenuManager::~MenuManager() {
-	for(std::vector<Menu *>::iterator it = this->menus.begin(); it != this->menus.end(); ++it) {
-		delete *it;
+	for(int i = 0; i < 10; i++)
+	{
+		delete this->menus[i];
 	}
 }
 
@@ -10,7 +11,12 @@ MenuManager::MenuManager(Menu * mainMenu) {
 	this->mainMenu = mainMenu;
 	this->currentMenu = mainMenu;
 
-	this->menus.push_back(mainMenu);
+	for(int i = 0; i < 10; i++)
+	{
+		this->menus[i] = NULL;
+	}
+
+	this->addNewMenu(mainMenu);
 }
 
 //make the current menu draw itself
@@ -27,7 +33,13 @@ void MenuManager::changeMenu(Menu * menu)
 
 //add new menu to the manager
 void MenuManager::addNewMenu(Menu * menu) {
-	this->menus.push_back(menu);
+	for(int i = 0; i < 10; i++)
+	{
+		if(this->menus[i] == NULL)
+		{
+			this->menus[i] = menu;
+		}
+	}
 }
 
 

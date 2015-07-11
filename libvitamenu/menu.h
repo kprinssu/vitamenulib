@@ -1,15 +1,15 @@
 #ifndef _MENU_H
 #define _MENU_H
 
-#include <string>
-#include <vector>
 #include "menu_item.h"
+#include <string>
 
 class Menu {
 	Menu * prevMenu;
 
 	std::string * name;
-	std::vector<MenuItem *> menuItems;
+	
+	MenuItem * menuItems[10];
 
 	int background_colour;
 public:

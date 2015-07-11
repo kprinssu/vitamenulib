@@ -7,7 +7,7 @@ class MenuManager {
 	Menu * currentMenu;
 	Menu * mainMenu;
 
-	std::vector<Menu *> menus;
+	Menu * menus[10];
 public:
 	MenuManager(Menu * mainMenu);
 	~MenuManager();
