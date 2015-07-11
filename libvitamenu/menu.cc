@@ -39,3 +39,9 @@ void Menu::addMenuItem(MenuItem * item) {
 void Menu::removeMenuItem(int x) {
 	menuItems.erase(this->menuItems.begin() + x);
 }
+
+//
+void Menu::handleTouch(int x , int y)
+{
+	//TODO: Find the correct menu item
+}
