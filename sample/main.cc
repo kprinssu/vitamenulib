@@ -9,7 +9,7 @@
 #include "../libvitamenu/menu.h"
 #include "../libvitamenu/menu_item.h"
 
-PSP2_MODULE_INFO(0, 0, "vita2dsample");
+PSP2_MODULE_INFO(0, 0, "touchvitalibsample");
 
 int main() {
 	vita2d_init();
