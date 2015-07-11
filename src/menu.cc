@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "font.h"
 
 Menu::Menu(Menu * prevMenu) {
 	this->name = new std::string("");
@@ -20,7 +21,9 @@ Menu::~Menu() {
 
 //draws the menu and the items
 void Menu::draw() {
+	vita2d_set_clear_color(BLACK);
 
+	font_draw_string(840, 200, WHITE, this->name.c_str());
 }
 
 //adds a menu to the menu

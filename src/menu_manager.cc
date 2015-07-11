@@ -13,8 +13,9 @@ MenuManager::MenuManager(Menu * mainMenu) {
 	this->menus.push_back(mainMenu);
 }
 
+//make the current menu draw itself
 void MenuManager::draw() {
-
+	this->currentMenu->draw();
 }
 
 //changes the current menu

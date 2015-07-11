@@ -11,7 +11,7 @@ class Menu {
 	std::string * name;
 	std::vector<MenuItem *> menuItems;
 
-	int background_colour = 0x000000;
+	int background_colour;
 
 	~Menu();
 public:

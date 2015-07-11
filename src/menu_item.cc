@@ -1,6 +1,8 @@
 #include "menu_item.h"
-#include <vita2d.h>
+#include "font.h"
 
+#include <vita2d.h>
+#include <stdio.h>
 MenuItem::MenuItemMenuItem(char * name, int x, int y) 
 {
 	this->name = new std::string(name);
@@ -12,12 +14,14 @@ MenuItem::~MenuItem() {
 	delete this->name;
 }
 
+//draw the menu item
 void MenuItem::draw() 
 {
-
+	font_draw_string(this->x, this->y, WHITE, this->name.c_str());
 }
 
+//do something here
 void MenuItem::handleTouch()
 {
-	
+	printf("I was called!");	
 }
