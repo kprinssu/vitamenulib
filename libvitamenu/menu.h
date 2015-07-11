@@ -12,11 +12,10 @@ class Menu {
 	std::vector<MenuItem *> menuItems;
 
 	int background_colour;
-
-	~Menu();
 public:
 	Menu(Menu * prevMenu);
 	Menu(Menu * prevMenu, char * name);
+	~Menu();
 
 	void draw();
 	void addMenuItem(MenuItem * item);

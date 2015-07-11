@@ -7,9 +7,9 @@ class MenuItem {
 	int x, y;
 
 	std::string * name;
-	~Menu();
 public:
 	MenuItem(char * name, int x, int y);
+	~MenuItem();
 	void draw();
 
 	void handleTouch();

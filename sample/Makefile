@@ -1,5 +1,5 @@
 TARGET = touchvitalibsample
-OBJS   = main.o
+OBJS   = main.o ../libvitamenu/*.cc ../libvitamenu/*.c
 
 LIBS = -lvita2d -lm -lc_stub -lSceKernel_stub -lSceDisplay_stub -lSceGxm_stub	\
 	-lSceCtrl_stub -lSceTouch_stub

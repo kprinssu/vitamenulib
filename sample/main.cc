@@ -5,20 +5,23 @@
 
 #include <vita2d.h>
 
-#include "../src/menu_manager.h"
-#include "../src/menu.h"
-#include "../src/menu_item.h"
+#include "../libvitamenu/menu_manager.h"
+#include "../libvitamenu/menu.h"
+#include "../libvitamenu/menu_item.h"
 
 PSP2_MODULE_INFO(0, 0, "vita2dsample");
 
 int main() {
 	vita2d_init();
 
-	Menu * menu = new Manu("Test");
+	char menu_name[] = "Test";
+	char item_name[] = "Sample test";
 
-	MenuManager * menu_manager = new MenuManager(menu);
+	Menu * menu = new Menu(NULL, &menu_name[0]);
 
-	MenuItem * item = new MenuItem("Sample test", 100, 100);
+	MenuManager * manager = new MenuManager(menu);
+
+	MenuItem * item = new MenuItem(&item_name[0], 100, 100);
 	menu->addMenuItem(item);
 
 	//input for both touch and joysticks
@@ -26,14 +29,14 @@ int main() {
 	SceTouchData touch;
 
 	while(1) {
-		clear_screen();
+		vita2d_clear_screen();
 
 		//read input
 		sceCtrlPeekBufferPositive(0, &pad, 1);
 		sceTouchPeek(0, &touch, 1);
 
 
-		menu_manager->draw();
+		manager->draw();
 
 
 		vita2d_end_drawing();
@@ -41,10 +44,9 @@ int main() {
 	}
 
 	vita2d_fini();
-	vita2d_free_texture(tex);
 
 	sceKernelExitProcess(0);
-	delete menu_manager;
+	delete manager;
 
 	return 0;
 }

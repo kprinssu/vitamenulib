@@ -26,12 +26,12 @@ void MenuManager::changeMenu(Menu * menu)
 }
 
 //add new menu to the manager
-void addNewMenu(Menu * menu) {
+void MenuManager::addNewMenu(Menu * menu) {
 	this->menus.push_back(menu);
 }
 
 
 //send the touch x and y to the current menu
-void handleTouch(int x, int y) {
-	this->currentMenu=>handleTouch(x, y);
+void MenuManager::handleTouch(int x, int y) {
+	this->currentMenu->handleTouch(x, y);
 }
