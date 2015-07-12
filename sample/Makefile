@@ -1,5 +1,6 @@
 TARGET = touchvitalibsample
-OBJS   = main.o ../libvitamenu/*.cc
+OBJS   = main.o 
+VITA_MENU_LIB = ../libvitamenu/*.cc
 
 LIBS = -lvita2d -lm -lc_stub -lSceKernel_stub -lSceDisplay_stub -lSceGxm_stub	\
 	-lSceCtrl_stub -lSceTouch_stub
@@ -16,7 +17,7 @@ all: $(TARGET)_fixup.elf
 %_fixup.elf: %.elf
 	psp2-fixup -q -S $< $@
 
-$(TARGET).elf: $(OBJS)
+$(TARGET).elf: $(OBJS) $(VITA_MENU_LIB)
 	$(CC) $(CXXFLAGS) $^ $(LIBS) -o $@
 
 clean:
