@@ -5,11 +5,12 @@
 #include <vita2d.h>
 #include <stdio.h>
 
-MenuItem::MenuItem(char * name, int x, int y) 
+MenuItem::MenuItem(char * name, int x, int y, void (*on_selection_fnc)()) 
 {
 	this->name = new std::string(name);
 	this->x = x;
 	this->y = y;
+	this->on_selection_fnc = on_selection_fnc;
 }
 
 MenuItem::~MenuItem() {
@@ -23,7 +24,7 @@ void MenuItem::draw()
 }
 
 //do something here
-void MenuItem::handleTouch()
+void MenuItem::handleSelection()
 {
-	printf("I was called!");	
+	(*this->on_selection_fnc)();
 }

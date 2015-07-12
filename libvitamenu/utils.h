@@ -18,5 +18,7 @@
 #define BLACK RGBA8(0,0,0,255)
 #define WHITE RGBA8(255,255,255,255)
 
+#define lerp(value, from_max, to_max) ((((value*10) * (to_max*10))/(from_max*10))/10)
+
 
 #endif

@@ -47,3 +47,9 @@ void MenuManager::addNewMenu(Menu * menu) {
 void MenuManager::handleTouch(int x, int y) {
 	this->currentMenu->handleTouch(x, y);
 }
+
+//send the directional pad input to menu
+void MenuManager::handleDpad(int up_down, bool selected)
+{
+	this->currentMenu->handleDpad(up_down, selected);
+}

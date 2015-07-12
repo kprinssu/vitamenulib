@@ -3,7 +3,6 @@
 
 #include "menu_item.h"
 #include <string>
-
 class Menu {
 	Menu * prevMenu;
 
@@ -11,17 +10,20 @@ class Menu {
 	
 	MenuItem * menuItems[10];
 
+	int x, y;
 	int background_colour;
+	int current_menu_selection;
+	int total_menu_items;
 public:
-	Menu(Menu * prevMenu);
-	Menu(Menu * prevMenu, char * name);
+	Menu(Menu * prevMenu, int x, int y, int background_colour);
+	Menu(Menu * prevMenu, int x, int y, int background_colour, char * name);
 	~Menu();
 
 	void draw();
 	void addMenuItem(MenuItem * item);
-	void removeMenuItem(int x);
 
 	void handleTouch(int x, int y);
+	void handleDpad(int up_down, bool selected);
 };
 
 #endif

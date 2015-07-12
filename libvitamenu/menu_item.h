@@ -7,12 +7,13 @@ class MenuItem {
 	int x, y;
 
 	std::string * name;
+	void (*on_selection_fnc)();
 public:
-	MenuItem(char * name, int x, int y);
+	MenuItem(char * name, int x, int y, void (*on_selection_fnc)());
 	~MenuItem();
 	void draw();
 
-	void handleTouch();
+	void handleSelection();
 };
 
 #endif

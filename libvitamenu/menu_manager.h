@@ -15,6 +15,8 @@ public:
 	void changeMenu(Menu * menu);
 	void addNewMenu(Menu * menu);
 	void handleTouch(int x, int y);
+	void handleDpad(int up_down, bool selected);
+	void handleSelection(int x, int y);
 };
 
 #endif
