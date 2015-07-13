@@ -17,6 +17,7 @@ MenuManager::MenuManager(Menu * mainMenu) {
 	}
 
 	this->addNewMenu(mainMenu);
+	this->last_pressed_button = 0;
 }
 
 //make the current menu draw itself
@@ -32,7 +33,8 @@ void MenuManager::changeMenu(Menu * menu)
 }
 
 //add new menu to the manager
-void MenuManager::addNewMenu(Menu * menu) {
+void MenuManager::addNewMenu(Menu * menu) 
+{
 	for(int i = 0; i < 10; i++)
 	{
 		if(this->menus[i] == NULL)
@@ -42,14 +44,39 @@ void MenuManager::addNewMenu(Menu * menu) {
 	}
 }
 
-
 //send the touch x and y to the current menu
-void MenuManager::handleTouch(int x, int y) {
-	this->currentMenu->handleTouch(x, y);
+void MenuManager::handleTouch(SceTouchData * touch_data) 
+{
+	if(touch_data->reportNum == 0)
+	{
+		return;
+	}
+
+	this->currentMenu->handleTouch(touch_data->report[0].y);
 }
 
 //send the directional pad input to menu
-void MenuManager::handleDpad(int up_down, bool selected)
+void MenuManager::handleDpad(SceCtrlData * ctrl_data)
 {
-	this->currentMenu->handleDpad(up_down, selected);
+	if(this->buttonPressed(ctrl_data->buttons, PSP2_CTRL_UP))
+	{
+		this->currentMenu->handleDpad(-1, false);
+	}
+	else if(this->buttonPressed(ctrl_data->buttons, PSP2_CTRL_DOWN))
+	{
+		this->currentMenu->handleDpad(1, false);
+	}
+	else if(this->buttonPressed(ctrl_data->buttons, PSP2_CTRL_CROSS))
+	{
+		this->currentMenu->handleDpad(0, true);
+	}
+
+	this->last_pressed_button = ctrl_data->buttons;
+}
+
+//check if a button was pressed
+bool MenuManager::buttonPressed(unsigned int x, unsigned int button)
+{
+	return (((this->last_pressed_button & button) == 0)
+			 		&& ((x & button) == button));
 }

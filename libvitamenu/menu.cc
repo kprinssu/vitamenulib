@@ -43,13 +43,13 @@ Menu::~Menu() {
 
 //draws the menu and the items
 void Menu::draw() {
-
 	vita2d_set_clear_color(this->background_colour);
 
-	font_draw_string(this->x, this->y, this->background_colour, this->name->c_str());
+	font_draw_string(this->x, this->y, WHITE, this->name->c_str());
+
 	for(int i = 0; i < this->total_menu_items; i++)
 	{
-		this->menuItems[i]->draw();
+		this->menuItems[i]->draw(this->current_menu_selection == i);
 	}
 }
 
@@ -67,7 +67,7 @@ void Menu::addMenuItem(MenuItem * item) {
 }
 
 //
-void Menu::handleTouch(int x , int y)
+void Menu::handleTouch(int y)
 {
 	//TODO: Find the correct menu item
 	int ceil_y = ceil(y / 16); //font height = 16
@@ -90,20 +90,23 @@ void Menu::handleDpad(int up_down, bool selected)
 		this->menuItems[this->current_menu_selection]->handleSelection();
 		return;
 	}
-	if(up_down != 1 && up_down != -1)
+	else if(up_down != 1 && up_down != -1)
 	{
 		return;
 	}
 
 	this->current_menu_selection += up_down;
 
+
 	//boundary checks
-	if(this->current_menu_selection == 0 && up_down == -1)
+	if(this->current_menu_selection < 0)
+	{
+		this->current_menu_selection = (total_menu_items - 1);	
+	}
+	else if(this->current_menu_selection >= this->total_menu_items)
 	{
 		this->current_menu_selection = 0;
 	}
-	else if(this->current_menu_selection == total_menu_items && up_down == 1)
-	{
-		this->current_menu_selection = (total_menu_items - 1);
-	}
+
+	printf("before:%d after:%d %s", (this->current_menu_selection + up_down), this->current_menu_selection, "\n");
 }

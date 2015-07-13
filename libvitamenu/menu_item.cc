@@ -17,9 +17,19 @@ MenuItem::~MenuItem() {
 }
 
 //draw the menu item
-void MenuItem::draw() 
+void MenuItem::draw(bool selected) 
 {
-	font_draw_string(this->x, this->y, WHITE, this->name->c_str());
+	std::string output_name = "";
+
+	if(selected)
+	{
+		//cannot make '> ' a global const, gcc seems to dislike it
+		output_name += "> ";
+	}
+	
+	output_name += *this->name;
+
+	font_draw_string(this->x, this->y, WHITE, output_name.c_str());
 }
 
 //do something here

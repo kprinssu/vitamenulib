@@ -32,13 +32,13 @@ int main() {
 	char item2_name[] = "Item 2";
 	char item3_name[] = "Item 3";
 
-	Menu * menu = new Menu(NULL, 840, 50, BLACK, &menu_name[0]);
+	Menu * menu = new Menu(NULL, 100, 50, RED, &menu_name[0]);
 
 	MenuManager * manager = new MenuManager(menu);
 
-//	menu->addMenuItem( new MenuItem(&item1_name[0], 100, 100, &test_function));
-//	menu->addMenuItem( new MenuItem(&item2_name[0], 100, 116, &test_function));
-//	menu->addMenuItem( new MenuItem(&item3_name[0], 100, 132, &test_function));
+	menu->addMenuItem(new MenuItem(&item1_name[0], 100, 100, &test_function));
+	menu->addMenuItem(new MenuItem(&item2_name[0], 100, 116, &test_function));
+	menu->addMenuItem(new MenuItem(&item3_name[0], 100, 132, &test_function));
 
 
 	//input for both touch and joysticks
@@ -51,30 +51,24 @@ int main() {
 		sceTouchPeek(0, &touch, 1);
 
 		//quit when you press select
+
+
 		if (pad.buttons & PSP2_CTRL_TRIANGLE)
 		{
 			break;
 		}
-		else if(pad.buttons & PSP2_CTRL_UP)
-		{
-			manager->handleDpad(1, false);
-		}
-		else if(pad.buttons & PSP2_CTRL_DOWN)
-		{
-			manager->handleDpad(-1, false);
-		}
-		else if(pad.buttons & PSP2_CTRL_CROSS)
-		{
-			manager->handleDpad(0, true);
-		}
+
+		manager->handleDpad(&pad);
+
+		manager->handleTouch(&touch);
 
 		if(touch.reportNum > 0)
 		{
 			/* Front touchscreen: 1920x1088 */
 			//int x = lerp(touch.report[0].x, 1920, SCREEN_W) - w/2;
-			int y = lerp(touch.report[0].y, 1088, SCREEN_H) - 16/2;
+		//	int y = lerp(touch.report[0].y, 1088, SCREEN_H) - 16/2;
 
-			manager->handleTouch(0, y);
+			
 		}
 
 		vita2d_start_drawing();

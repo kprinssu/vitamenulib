@@ -22,7 +22,7 @@ public:
 	void draw();
 	void addMenuItem(MenuItem * item);
 
-	void handleTouch(int x, int y);
+	void handleTouch(int y);
 	void handleDpad(int up_down, bool selected);
 };
 

@@ -11,7 +11,7 @@ class MenuItem {
 public:
 	MenuItem(char * name, int x, int y, void (*on_selection_fnc)());
 	~MenuItem();
-	void draw();
+	void draw(bool selected);
 
 	void handleSelection();
 };
