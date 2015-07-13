@@ -3,7 +3,8 @@
 #include "utils.h"
 
 #include <vita2d.h>
-#include <stdio.h>
+
+#include <cstdio>
 
 MenuItem::MenuItem(char * name, int x, int y, void (*on_selection_fnc)()) 
 {

@@ -8,12 +8,11 @@
 #include <cstdio>
 
 Menu::Menu(Menu * prevMenu, int x, int y, int background_colour)
-	: x(x), y(y), background_colour(background_colour), current_menu_selection(0)
+	: x(x), y(y), background_colour(background_colour), current_menu_selection(0), total_menu_items(0)
 {
 	this->name = new std::string("");
 
 	this->prevMenu = prevMenu;
-
 	for(int i = 0; i < 10; i++)
 	{
 		this->menuItems[i] = NULL;
@@ -21,7 +20,7 @@ Menu::Menu(Menu * prevMenu, int x, int y, int background_colour)
 }
 
 Menu::Menu(Menu * prevMenu, int x, int y, int background_colour, char * name) 
-	: x(x), y(y), background_colour(background_colour), current_menu_selection(0)
+	: x(x), y(y), background_colour(background_colour), current_menu_selection(0), total_menu_items(0)
 {
 	this->name = new std::string(name);
 
@@ -44,10 +43,10 @@ Menu::~Menu() {
 
 //draws the menu and the items
 void Menu::draw() {
+
 	vita2d_set_clear_color(this->background_colour);
 
 	font_draw_string(this->x, this->y, this->background_colour, this->name->c_str());
-
 	for(int i = 0; i < this->total_menu_items; i++)
 	{
 		this->menuItems[i]->draw();
@@ -64,6 +63,7 @@ void Menu::addMenuItem(MenuItem * item) {
 	}
 
 	this->menuItems[total_menu_items] = item;
+	this->total_menu_items++;
 }
 
 //
