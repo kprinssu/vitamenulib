@@ -4,8 +4,6 @@
 
 #include <vita2d.h>
 
-#include <cstdio>
-
 MenuItem::MenuItem(char * name, int x, int y, void (*on_selection_fnc)()) 
 {
 	this->name = new std::string(name);
