@@ -1,4 +1,5 @@
 #include "menu_manager.h"
+#include "utils.h"
 
 MenuManager::~MenuManager() {
 	for(int i = 0; i < 10; i++)
@@ -52,7 +53,10 @@ void MenuManager::handleTouch(SceTouchData * touch_data)
 		return;
 	}
 
-	this->currentMenu->handleTouch(touch_data->report[0].y);
+	int x = VITA_SCREEN_NORMALIZE(touch_data->report[0].x, VITA_TOUCH_H, VITA_SCREEN_W);
+	int y = VITA_SCREEN_NORMALIZE(touch_data->report[0].y, VITA_TOUCH_W, VITA_SCREEN_H);
+
+	this->currentMenu->handleTouch(x, y);
 }
 
 //send the directional pad input to menu

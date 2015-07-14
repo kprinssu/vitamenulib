@@ -32,8 +32,24 @@ void MenuItem::draw(bool selected)
 	font_draw_string(this->x, this->y, WHITE, output_name.c_str());
 }
 
-//do something here
+//dcalls an void function only
 void MenuItem::handleSelection()
 {
 	(*this->on_selection_fnc)();
+}
+
+
+//returns x-coord of this menu item
+int MenuItem::getX() {
+	return this->x;
+}
+
+//returns y-coord of this menu item
+int MenuItem::getY() {
+	return this->y;
+}
+
+//returns length of the name of this menu item (in pixels)
+int MenuItem::getNameLength()  {
+	return FONT_DRAW_W * this->name->length();
 }

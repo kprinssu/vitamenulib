@@ -14,6 +14,10 @@ public:
 	void draw(bool selected);
 
 	void handleSelection();
+
+	int getX();
+	int getY();
+	int getNameLength();
 };
 
 #endif

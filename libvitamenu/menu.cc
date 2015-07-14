@@ -5,8 +5,6 @@
 #include <vita2d.h>
 #include <cmath>
 
-#include <cstdio>
-
 Menu::Menu(Menu * prevMenu, int x, int y, int background_colour)
 	: x(x), y(y), background_colour(background_colour), current_menu_selection(0), total_menu_items(0)
 {
@@ -67,17 +65,25 @@ void Menu::addMenuItem(MenuItem * item) {
 }
 
 //
-void Menu::handleTouch(int y)
+void Menu::handleTouch(int x, int y)
 {
 	//TODO: Find the correct menu item
-	int ceil_y = ceil(y / 16); //font height = 16
-
-	if (ceil_y >= this->total_menu_items)
+	for(int i = 0; i < this->total_menu_items; i++)
 	{
-		return;
+		MenuItem * item = this->menuItems[i];
+
+		if((x >= item->getX()) 
+			&& (x <= (item->getX() + item->getNameLength()))
+			&& (y >= item->getY())
+			&& (y <= item->getY())) //16 is the height of the font
+		{
+			this->current_menu_selection = i;
+			this->menuItems[i]->handleSelection();
+			break;
+		}
 	}
 
-	this->menuItems[ceil_y]->handleSelection();
+	
 }
 
 // handles the dpad movement
@@ -107,6 +113,4 @@ void Menu::handleDpad(int up_down, bool selected)
 	{
 		this->current_menu_selection = 0;
 	}
-
-	printf("before:%d after:%d %s", (this->current_menu_selection + up_down), this->current_menu_selection, "\n");
 }
