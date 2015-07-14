@@ -1,3 +1,3 @@
 [submodule "vita2dlib"]
 	path = vita2dlib
-	url = git@github.com:kprinssu/vita2dlib.git
+	url = https://github.com/kprinssu/vita2dlib.git
