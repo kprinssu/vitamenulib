@@ -37,8 +37,8 @@ int main() {
 	MenuManager * manager = new MenuManager(menu);
 
 	menu->addMenuItem(new MenuItem(&item1_name[0], 100, 100, &test_function));
-	menu->addMenuItem(new MenuItem(&item2_name[0], 100, 116, &test_function));
-	menu->addMenuItem(new MenuItem(&item3_name[0], 100, 132, &test_function));
+	menu->addMenuItem(new MenuItem(&item2_name[0], 100, 164, &test_function));
+	menu->addMenuItem(new MenuItem(&item3_name[0], 100, 228, &test_function));
 
 
 	//input for both touch and joysticks
@@ -50,9 +50,7 @@ int main() {
 		sceCtrlPeekBufferPositive(0, &pad, 1);
 		sceTouchPeek(0, &touch, 1);
 
-		//quit when you press select
-
-
+		//quit when you press triangle
 		if (pad.buttons & PSP2_CTRL_TRIANGLE)
 		{
 			break;
@@ -61,15 +59,6 @@ int main() {
 		manager->handleDpad(&pad);
 
 		manager->handleTouch(&touch);
-
-		if(touch.reportNum > 0)
-		{
-			/* Front touchscreen: 1920x1088 */
-			//int x = lerp(touch.report[0].x, 1920, SCREEN_W) - w/2;
-		//	int y = lerp(touch.report[0].y, 1088, SCREEN_H) - 16/2;
-
-			
-		}
 
 		vita2d_start_drawing();
 		vita2d_clear_screen();
