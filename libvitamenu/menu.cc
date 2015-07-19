@@ -3,7 +3,6 @@
 #include "utils.h"
 
 #include <vita2d.h>
-#include <cmath>
 
 Menu::Menu(Menu * prevMenu, int x, int y, int background_colour)
 	: x(x), y(y), background_colour(background_colour), current_menu_selection(0), total_menu_items(0)
@@ -64,10 +63,9 @@ void Menu::addMenuItem(MenuItem * item) {
 	this->total_menu_items++;
 }
 
-//
+// handles the touch and sends to the correct menu item
 void Menu::handleTouch(int x, int y)
 {
-	//TODO: Find the correct menu item
 	for(int i = 0; i < this->total_menu_items; i++)
 	{
 		MenuItem * item = this->menuItems[i];
@@ -75,7 +73,7 @@ void Menu::handleTouch(int x, int y)
 		if((x >= item->getX()) 
 			&& (x <= (item->getX() + item->getNameLength()))
 			&& (y >= item->getY())
-			&& (y <= item->getY())) //16 is the height of the font
+			&& (y <= item->getY() + FONT_DRAW_H)) //16 is the height of the font
 		{
 			this->current_menu_selection = i;
 			this->menuItems[i]->handleSelection();
