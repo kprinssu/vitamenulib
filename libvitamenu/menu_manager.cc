@@ -1,5 +1,6 @@
 #include "menu_manager.h"
 #include "utils.h"
+#include "menu.h"
 
 MenuManager::~MenuManager() {
 	for(int i = 0; i < 10; i++)
@@ -8,16 +9,12 @@ MenuManager::~MenuManager() {
 	}
 }
 
-MenuManager::MenuManager(Menu * mainMenu) {
-	this->mainMenu = mainMenu;
-	this->currentMenu = mainMenu;
-
+MenuManager::MenuManager() {
 	for(int i = 0; i < 10; i++)
 	{
 		this->menus[i] = NULL;
 	}
 
-	this->addNewMenu(mainMenu);
 	this->last_pressed_button = 0;
 }
 
@@ -40,6 +37,11 @@ void MenuManager::addNewMenu(Menu * menu)
 	{
 		if(this->menus[i] == NULL)
 		{
+			if(i == 0)
+			{
+				this->currentMenu = menu;
+			}
+
 			this->menus[i] = menu;
 		}
 	}

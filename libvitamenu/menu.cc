@@ -2,24 +2,23 @@
 #include "font.h"
 #include "utils.h"
 
-Menu::Menu(Menu * prevMenu, int x, int y)
-	: x(x), y(y), background_colour(BLACK), current_menu_selection(0), total_menu_items(0)
+#include "menu_manager.h"
+
+//does nothing, ignore this
+//hackish fix for back menu item
+void menu_item_empty() {}
+
+Menu::Menu(MenuManager * manager, int x, int y)
+	: x(x), y(y), background_colour(BLACK), current_menu_selection(0), total_menu_items(0), manager(manager)
 {
 	this->name = new std::string("");
 	this->backgroundTexture = NULL;
+	this->prevMenu = NULL;
 	
-	this->prevMenu = prevMenu;
-
 	//11 menu items since we need to account for back menu item
 	for(int i = 0; i < 11; i++)
 	{
 		this->menuItems[i] = NULL;
-	}
-
-	if(this->prevMenu)
-	{
-		//TODO: Actually implement the back button
-		//this->menuItems[11] = new MenuItem
 	}
 }
 
@@ -34,6 +33,12 @@ Menu::~Menu() {
 	}
 
 	delete this->menuItems[10]; //back button
+}
+
+//closes the menu
+void Menu::closeMenu()
+{
+	this->manager->changeMenu(this->prevMenu);
 }
 
 //draws the menu and the items
@@ -53,6 +58,11 @@ void Menu::draw() {
 	for(int i = 0; i < this->total_menu_items; i++)
 	{
 		this->menuItems[i]->draw(this->current_menu_selection == i);
+	}
+
+	if(this->prevMenu)
+	{
+		this->menuItems[11]->draw(false);
 	}
 }
 
@@ -83,7 +93,10 @@ void Menu::handleTouch(int x, int y)
 
 	if(this->prevMenu)
 	{
-		this->menuItems[11]->handleSelection(x, y);
+		if(this->menuItems[11]->handleSelection(x, y))
+		{
+			this->closeMenu();
+		}
 	}
 }
 
@@ -124,6 +137,23 @@ void Menu::setName(char * name)
 	this->name = new std::string(name);
 }
 
+//sets the previous menu
+void Menu::setPrevMenu(Menu * prevMenu, char * name, int x, int y)
+{
+	//tidying up afterselves
+	if(this->prevMenu)
+	{
+		delete this->menuItems[11];
+		this->menuItems[11] = NULL;	
+	}
+
+	this->prevMenu = prevMenu;
+
+	if(this->prevMenu)
+	{
+		this->menuItems[11] = new MenuItem(name, x, y, &menu_item_empty);
+	}
+}
 
 //changes the background by loading an image
 void Menu::setBackground(char * path)

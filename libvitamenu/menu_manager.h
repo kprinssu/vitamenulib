@@ -4,7 +4,7 @@
 #include <psp2/ctrl.h>
 #include <psp2/touch.h>
 
-#include "menu.h"
+class Menu;
 
 class MenuManager {
 	Menu * currentMenu;
@@ -13,7 +13,7 @@ class MenuManager {
 	Menu * menus[10];
 	unsigned int last_pressed_button;
 public:
-	MenuManager(Menu * mainMenu);
+	MenuManager();
 	~MenuManager();
 	void draw();
 	void changeMenu(Menu * menu);

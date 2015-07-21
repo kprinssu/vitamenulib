@@ -6,6 +6,8 @@
 #include <vita2d.h>
 #include <string>
 
+class MenuManager;
+
 class Menu {
 	Menu * prevMenu;
 
@@ -20,8 +22,9 @@ class Menu {
 
 	vita2d_texture * backgroundTexture;
 
+	MenuManager * manager;
 public:
-	Menu(Menu * prevMenu, int x, int y);
+	Menu(MenuManager * manager, int x, int y);
 	~Menu();
 
 	void draw();
@@ -30,8 +33,11 @@ public:
 	void handleTouch(int x, int y);
 	void handleDpad(int up_down, bool selected);
 	void setName(char * name);
+	void setPrevMenu(Menu * prevMenu, char * name, int x, int y);
 	void setBackground(char * path);
 	void setBackground(int backgroundColour);
+
+	void closeMenu();
 };
 
 #endif

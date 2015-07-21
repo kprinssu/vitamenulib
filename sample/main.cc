@@ -3,7 +3,9 @@
 #include <psp2/moduleinfo.h>
 #include <psp2/kernel/processmgr.h>
 
+#include <string>
 #include <cstdio>
+#include <cstdlib>
 #include <vita2d.h>
 
 #include "../libvitamenu/menu_manager.h"
@@ -28,18 +30,33 @@ int main() {
 	vita2d_init();
 
 	char menu_name[] = "Sample Menu";
+	char menu_name2[] = "Sample Child Menu";
 	char item1_name[] = "Item 1";
 	char item2_name[] = "Item 2";
 	char item3_name[] = "Item 3";
 
-	Menu * menu = new Menu(NULL, 100, 50, RED, &menu_name[0]);
+	char back_name[] = "Back";
 
-	MenuManager * manager = new MenuManager(menu);
+  	char background_file[] = "cache0:/VitaDefilerClient/Documents/test.png";
+
+  	MenuManager * manager = new MenuManager();
+
+	Menu * menu = new Menu(manager, 100, 50);
+	menu->setName(&menu_name[0]);
+	menu->setBackground(&background_file[0]);
 
 	menu->addMenuItem(new MenuItem(&item1_name[0], 100, 100, &test_function));
-	menu->addMenuItem(new MenuItem(&item2_name[0], 100, 164, &test_function));
-	menu->addMenuItem(new MenuItem(&item3_name[0], 100, 228, &test_function));
+	menu->addMenuItem(new MenuItem(&item2_name[0], 100, 116, &test_function));
+	menu->addMenuItem(new MenuItem(&item3_name[0], 100, 132, &test_function));
 
+	Menu * secondMenu = new Menu(manager, 100, 50);
+	secondMenu->setName(&menu_name2[0]);
+	secondMenu->setBackground(RED);
+	secondMenu->setPrevMenu(menu, &back_name[0], 100, 200);
+
+	manager->changeMenu(secondMenu);
+
+	log("Menu loaded");
 
 	//input for both touch and joysticks
 	SceCtrlData pad;
@@ -70,6 +87,7 @@ int main() {
 	}
 
 	log("Stopped.\n");
+	
 
 	vita2d_fini();
 

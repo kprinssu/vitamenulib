@@ -2,7 +2,7 @@ TARGET = touchvitalibsample
 OBJS   = main.o 
 VITA_MENU_LIB = ../libvitamenu/*.cc
 
-LIBS = -lvita2d -lm -lc_stub -lSceKernel_stub -lSceDisplay_stub -lSceGxm_stub	\
+LIBS = -lvita2d -lm -lpng -ljpeg -lz -lc_stub -lSceKernel_stub -lSceDisplay_stub -lSceGxm_stub	\
 	-lSceCtrl_stub -lSceTouch_stub
 
 PREFIX  = $(DEVKITARM)/bin/arm-none-eabi
@@ -18,7 +18,7 @@ all: $(TARGET)_fixup.elf
 	psp2-fixup -q -S $< $@
 
 $(TARGET).elf: $(OBJS) $(VITA_MENU_LIB)
-	$(CC) $(CXXFLAGS) $^ $(LIBS) -o $@
+	$(CC) $(CXXFLAGS) $^ $(LIBS) -o $@ 
 
 clean:
 	@rm -rf $(TARGET)_fixup.elf $(TARGET).elf $(OBJS)
