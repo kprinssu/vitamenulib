@@ -9,9 +9,17 @@ Menu::Menu(Menu * prevMenu, int x, int y)
 	this->backgroundTexture = NULL;
 	
 	this->prevMenu = prevMenu;
-	for(int i = 0; i < 10; i++)
+
+	//11 menu items since we need to account for back menu item
+	for(int i = 0; i < 11; i++)
 	{
 		this->menuItems[i] = NULL;
+	}
+
+	if(this->prevMenu)
+	{
+		//TODO: Actually implement the back button
+		//this->menuItems[11] = new MenuItem
 	}
 }
 
@@ -68,11 +76,15 @@ void Menu::handleTouch(int x, int y)
 	{
 		if(this->menuItems[i]->handleSelection(x, y))
 		{
+			this->current_menu_selection = i;
 			break;
 		}
 	}
 
-	this->menuItems[11]->handleSelection(x, y);
+	if(this->prevMenu)
+	{
+		this->menuItems[11]->handleSelection(x, y);
+	}
 }
 
 // handles the dpad movement
