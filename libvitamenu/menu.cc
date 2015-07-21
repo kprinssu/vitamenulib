@@ -107,7 +107,11 @@ void Menu::handleDpad(int up_down, bool selected)
 {
 	if(selected)
 	{
-		this->menuItems[this->current_menu_selection]->handleSelection();
+		if(this->menuItems[this->current_menu_selection])
+		{
+			this->menuItems[this->current_menu_selection]->handleSelection();
+		}
+		
 		return;
 	}
 	else if(up_down != 1 && up_down != -1)
