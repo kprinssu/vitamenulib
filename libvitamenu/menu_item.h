@@ -4,7 +4,7 @@
 #include <string>
 
 class MenuItem {
-	int x, y;
+	int x, y, draw_colour;
 
 	std::string * name;
 	void (*on_selection_fnc)();
@@ -13,10 +13,11 @@ public:
 	~MenuItem();
 	void draw(bool selected);
 
-	void handleSelection();
+	bool handleSelection(int x, int y);
+	bool handleSelection();
+	void setDrawColour(int drawColour);
+	void setName(char * name);
 
-	int getX();
-	int getY();
 	int getNameLength();
 };
 

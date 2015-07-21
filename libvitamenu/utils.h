@@ -25,6 +25,6 @@
 #define FONT_DRAW_W 16
 
 
-#define VITA_SCREEN_NORMALIZE(value, from_max, to_max) ((((value*10) * (to_max*10))/(from_max*10))/10)
+#define VITA_SCREEN_NORMALIZE(value, from_max, to_max) ((value * to_max) / (from_max))
 
 #endif

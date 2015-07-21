@@ -2,27 +2,13 @@
 #include "font.h"
 #include "utils.h"
 
-#include <vita2d.h>
-
-Menu::Menu(Menu * prevMenu, int x, int y, int background_colour)
-	: x(x), y(y), background_colour(background_colour), current_menu_selection(0), total_menu_items(0)
+Menu::Menu(Menu * prevMenu, int x, int y)
+	: x(x), y(y), background_colour(BLACK), current_menu_selection(0), total_menu_items(0)
 {
 	this->name = new std::string("");
-
+	this->backgroundTexture = NULL;
+	
 	this->prevMenu = prevMenu;
-	for(int i = 0; i < 10; i++)
-	{
-		this->menuItems[i] = NULL;
-	}
-}
-
-Menu::Menu(Menu * prevMenu, int x, int y, int background_colour, char * name) 
-	: x(x), y(y), background_colour(background_colour), current_menu_selection(0), total_menu_items(0)
-{
-	this->name = new std::string(name);
-
-	this->prevMenu = prevMenu;
-
 	for(int i = 0; i < 10; i++)
 	{
 		this->menuItems[i] = NULL;
@@ -32,15 +18,27 @@ Menu::Menu(Menu * prevMenu, int x, int y, int background_colour, char * name)
 Menu::~Menu() {
 	delete this->name;
 
+	vita2d_free_texture(this->backgroundTexture); //make sure to free the memory allocated to the test background
+
 	for(int i = 0; i < this->total_menu_items; i++)
 	{
 		delete this->menuItems[i];
 	}
+
+	delete this->menuItems[10]; //back button
 }
 
 //draws the menu and the items
 void Menu::draw() {
-	vita2d_set_clear_color(this->background_colour);
+
+	if(!this->backgroundTexture)
+	{
+		vita2d_set_clear_color(this->background_colour);
+	}
+	else
+	{
+		vita2d_draw_texture(this->backgroundTexture, 0, 0);
+	}
 
 	font_draw_string(this->x, this->y, WHITE, this->name->c_str());
 
@@ -68,20 +66,13 @@ void Menu::handleTouch(int x, int y)
 {
 	for(int i = 0; i < this->total_menu_items; i++)
 	{
-		MenuItem * item = this->menuItems[i];
-
-		if((x >= item->getX()) 
-			&& (x <= (item->getX() + item->getNameLength()))
-			&& (y >= item->getY())
-			&& (y <= item->getY() + FONT_DRAW_H)) //16 is the height of the font
+		if(this->menuItems[i]->handleSelection(x, y))
 		{
-			this->current_menu_selection = i;
-			this->menuItems[i]->handleSelection();
 			break;
 		}
 	}
 
-	
+	this->menuItems[11]->handleSelection(x, y);
 }
 
 // handles the dpad movement
@@ -111,4 +102,33 @@ void Menu::handleDpad(int up_down, bool selected)
 	{
 		this->current_menu_selection = 0;
 	}
+}
+
+//sets the name of the menu
+void Menu::setName(char * name)
+{
+	delete this->name;
+
+	this->name = new std::string(name);
+}
+
+
+//changes the background by loading an image
+void Menu::setBackground(char * path)
+{
+	vita2d_free_texture(this->backgroundTexture); //make sure to free the memory allocated to the test background
+
+	this->backgroundTexture = vita2d_load_PNG_file(path); //assuming path is correct!
+}
+
+//changes the background by loading an image
+void Menu::setBackground(int backgroundColour = BLACK)
+{
+	if(this->backgroundTexture)
+	{
+		vita2d_free_texture(this->backgroundTexture); //make sure to free the memory allocated to the test background
+		this->backgroundTexture = NULL;
+	}
+
+	this->background_colour = backgroundColour;
 }
