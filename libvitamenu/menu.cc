@@ -4,6 +4,8 @@
 
 #include "menu_manager.h"
 
+#include <cstdio>
+
 //does nothing, ignore this
 //hackish fix for back menu item
 void menu_item_empty() {}
@@ -11,6 +13,8 @@ void menu_item_empty() {}
 Menu::Menu(MenuManager * manager, int x, int y)
 	: x(x), y(y), background_colour(BLACK), current_menu_selection(0), total_menu_items(0), manager(manager)
 {
+	printf("%d %d%s", x, this->x, "\n");
+
 	this->name = new std::string("");
 	this->backgroundTexture = NULL;
 	this->prevMenu = NULL;
@@ -53,8 +57,6 @@ void Menu::draw() {
 		vita2d_draw_texture(this->backgroundTexture, 0, 0);
 	}
 
-	font_draw_string(this->x, this->y, WHITE, this->name->c_str());
-
 	for(int i = 0; i < this->total_menu_items; i++)
 	{
 		this->menuItems[i]->draw(this->current_menu_selection == i);
@@ -62,7 +64,7 @@ void Menu::draw() {
 
 	if(this->prevMenu)
 	{
-		this->menuItems[11]->draw(false);
+		this->menuItems[10]->draw(this->current_menu_selection == 10);
 	}
 }
 
@@ -93,7 +95,7 @@ void Menu::handleTouch(int x, int y)
 
 	if(this->prevMenu)
 	{
-		if(this->menuItems[11]->handleSelection(x, y))
+		if(this->menuItems[10]->handleSelection(x, y))
 		{
 			this->closeMenu();
 		}
@@ -107,8 +109,15 @@ void Menu::handleDpad(int up_down, bool selected)
 {
 	if(selected)
 	{
-		if(this->menuItems[this->current_menu_selection])
+		//back button
+		if(this->current_menu_selection == 11)
 		{
+			this->closeMenu();
+			return;
+		}
+		else if(this->menuItems[this->current_menu_selection])
+		{
+
 			this->menuItems[this->current_menu_selection]->handleSelection();
 		}
 		
@@ -125,11 +134,23 @@ void Menu::handleDpad(int up_down, bool selected)
 	//boundary checks
 	if(this->current_menu_selection < 0)
 	{
-		this->current_menu_selection = (total_menu_items - 1);	
+		this->current_menu_selection = 10; // (total_menu_items - 1);	
 	}
-	else if(this->current_menu_selection >= this->total_menu_items)
+	else if(this->current_menu_selection >= 11)
 	{
 		this->current_menu_selection = 0;
+	}
+	else if(this->current_menu_selection >= this->total_menu_items
+	 && this->current_menu_selection < 11)
+	{
+		if(up_down == 1)
+		{
+			this->current_menu_selection =  0;
+		}
+		else
+		{
+			this->current_menu_selection =  this->total_menu_items - 1;
+		}
 	}
 }
 
@@ -147,15 +168,15 @@ void Menu::setPrevMenu(Menu * prevMenu, char * name, int x, int y)
 	//tidying up afterselves
 	if(this->prevMenu)
 	{
-		delete this->menuItems[11];
-		this->menuItems[11] = NULL;	
+		delete this->menuItems[10];
+		this->menuItems[10] = NULL;	
 	}
 
 	this->prevMenu = prevMenu;
 
 	if(this->prevMenu)
 	{
-		this->menuItems[11] = new MenuItem(name, x, y, &menu_item_empty);
+		this->menuItems[10] = new MenuItem(name, x, y, &menu_item_empty);
 	}
 }
 
