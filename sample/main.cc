@@ -52,7 +52,11 @@ int main() {
 	Menu * secondMenu = new Menu(manager, 100, 50);
 	secondMenu->setName(&menu_name2[0]);
 	secondMenu->setBackground(RED);
-	secondMenu->setPrevMenu(menu, &back_name[0], 100, 200);
+
+	secondMenu->addMenuItem(new MenuItem(&item1_name[0], 100, 100, &test_function));
+	secondMenu->addMenuItem(new MenuItem(&item2_name[0], 100, 116, &test_function));
+	secondMenu->addMenuItem(new MenuItem(&item3_name[0], 100, 132, &test_function));
+	secondMenu->setPrevMenu(menu, &back_name[0], 100, 148);
 
 	manager->changeMenu(secondMenu);
 
