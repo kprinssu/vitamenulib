@@ -108,7 +108,7 @@ void Menu::handleDpad(int up_down, bool selected)
 	if(selected)
 	{
 		//back button
-		if(this->current_menu_selection == 11)
+		if(this->current_menu_selection == 10)
 		{
 			this->closeMenu(); 
 			return;
@@ -143,7 +143,7 @@ void Menu::handleDpad(int up_down, bool selected)
 	{
 		if(up_down == 1)
 		{
-			this->current_menu_selection =  0;
+			this->current_menu_selection =  10;
 		}
 		else
 		{
