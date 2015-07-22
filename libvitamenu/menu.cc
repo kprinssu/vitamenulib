@@ -4,8 +4,6 @@
 
 #include "menu_manager.h"
 
-#include <cstdio>
-
 //does nothing, ignore this
 //hackish fix for back menu item
 void menu_item_empty() {}
@@ -13,8 +11,6 @@ void menu_item_empty() {}
 Menu::Menu(MenuManager * manager, int x, int y)
 	: x(x), y(y), background_colour(BLACK), current_menu_selection(0), total_menu_items(0), manager(manager)
 {
-	printf("%d %d%s", x, this->x, "\n");
-
 	this->name = new std::string("");
 	this->backgroundTexture = NULL;
 	this->prevMenu = NULL;
@@ -56,6 +52,8 @@ void Menu::draw() {
 	{
 		vita2d_draw_texture(this->backgroundTexture, 0, 0);
 	}
+
+	font_draw_string(this->x, this->y, WHITE, this->name->c_str());
 
 	for(int i = 0; i < this->total_menu_items; i++)
 	{
@@ -112,7 +110,7 @@ void Menu::handleDpad(int up_down, bool selected)
 		//back button
 		if(this->current_menu_selection == 11)
 		{
-			this->closeMenu();
+			this->closeMenu(); 
 			return;
 		}
 		else if(this->menuItems[this->current_menu_selection])

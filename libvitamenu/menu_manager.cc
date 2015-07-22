@@ -43,6 +43,7 @@ void MenuManager::addNewMenu(Menu * menu)
 			}
 
 			this->menus[i] = menu;
+			break;
 		}
 	}
 }
