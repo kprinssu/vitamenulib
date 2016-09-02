@@ -1,8 +1,10 @@
-vitamenulibx
+vitamenulib
 ===========
 
 A rudimentary menu system for the Vita built on vita2dlib and C++. 
 Most of the library (unless specified) will be under the MIT license.
+
+This project is not being maintained anymore.
 
 Features
 --------
@@ -13,7 +15,7 @@ Features
 
 Documentation
 -------
-vitamenulib is meant to be directly incorporated into your project. No need to compile and install vitamenulib separately.
+vitamenulib is meant to be directly incorporated into your project. No need to compile and install vitamenulib separately. 
 
 The very first thing you need to is to use the Menu Manager, you can do easily by:
 ````
